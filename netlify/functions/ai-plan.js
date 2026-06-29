@@ -44,7 +44,10 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: 'Bad response from Claude' }), { status: 500 })
   }
 
-  return new Response(data.content[0].text, {
+  // Strip markdown code fences if present
+  const raw = data.content[0].text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim()
+
+  return new Response(raw, {
     status: 200,
     headers: { 'content-type': 'application/json' },
   })
