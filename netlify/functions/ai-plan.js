@@ -25,8 +25,8 @@ export default async (req) => {
     },
     body: JSON.stringify({
       model: 'claude-sonnet-4-6',
-      max_tokens: 2048,
-      system: 'You are an experience planning assistant for Bucket Bound. Respond in JSON only.',
+      max_tokens: 1500,
+      system: 'You are a bucket list planning assistant. Be concise. Respond in raw JSON only, no markdown, no explanation.',
       messages: [{ role: 'user', content: body.prompt }],
     }),
   })

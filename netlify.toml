@@ -2,6 +2,12 @@
   command = "npm install && npm run build"
   publish = "dist"
 
+[functions]
+  included_files = ["netlify/functions/**"]
+
+[functions."ai-plan"]
+  timeout = 30
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
