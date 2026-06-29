@@ -5,7 +5,10 @@ async function callClaude(prompt) {
     body: JSON.stringify({ prompt }),
   })
 
-  if (!res.ok) throw new Error(`AI request failed: ${res.status}`)
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error || `AI request failed: ${res.status}`)
+  }
   return res.json()
 }
 

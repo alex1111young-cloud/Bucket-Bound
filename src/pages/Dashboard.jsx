@@ -102,7 +102,8 @@ export default function Dashboard() {
       })
       if (!error) fetchItems()
     } catch (err) {
-      alert('AI plan failed: ' + err.message)
+      // Try to get more detail from the response
+      alert('AI plan failed: ' + (err.message || JSON.stringify(err)))
     }
     setPlanLoading(null)
   }

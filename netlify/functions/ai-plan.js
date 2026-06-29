@@ -3,12 +3,23 @@ export default async (req) => {
     return new Response('Method not allowed', { status: 405 })
   }
 
-  const body = await req.json()
+  const apiKey = process.env.VITE_CLAUDE_API_KEY || process.env.CLAUDE_API_KEY
+
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: 'No API key configured' }), { status: 500 })
+  }
+
+  let body
+  try {
+    body = await req.json()
+  } catch (e) {
+    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), { status: 400 })
+  }
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
-      'x-api-key': process.env.VITE_CLAUDE_API_KEY || process.env.CLAUDE_API_KEY,
+      'x-api-key': apiKey,
       'anthropic-version': '2023-06-01',
       'content-type': 'application/json',
     },
@@ -20,12 +31,19 @@ export default async (req) => {
     }),
   })
 
+  const text = await response.text()
+
   if (!response.ok) {
-    const text = await response.text()
-    return new Response(JSON.stringify({ error: `Claude API error ${response.status}: ${text}` }), { status: 500 })
+    return new Response(JSON.stringify({ error: `Claude ${response.status}: ${text}` }), { status: 500 })
   }
 
-  const data = await response.json()
+  let data
+  try {
+    data = JSON.parse(text)
+  } catch (e) {
+    return new Response(JSON.stringify({ error: 'Bad response from Claude' }), { status: 500 })
+  }
+
   return new Response(data.content[0].text, {
     status: 200,
     headers: { 'content-type': 'application/json' },
