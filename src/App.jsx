@@ -8,6 +8,7 @@ import Item from './pages/Item'
 import Discover from './pages/Discover'
 import Leaderboard from './pages/Leaderboard'
 import Onboarding from './components/auth/Onboarding'
+import Feed from './pages/Feed'
 
 function OnboardingRoute() {
   const { session, profile, loading } = useAuth()
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/item/:id" element={<ProtectedRoute><Item /></ProtectedRoute>} />
+          <Route path="/feed" element={<ProtectedRoute><Feed /></ProtectedRoute>} />
           <Route path="/discover" element={<ProtectedRoute><Discover /></ProtectedRoute>} />
           <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />

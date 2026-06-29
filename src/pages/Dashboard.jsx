@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, Plus, User, X, Sparkles, CheckCircle, Circle, Clock, ChevronDown, ChevronUp } from 'lucide-react'
+import { Plus, X, Sparkles, CheckCircle, Circle, Clock, ChevronDown, ChevronUp } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import { generatePlan } from '../lib/claude'
-import Logo from '../components/shared/Logo'
+import Nav from '../components/shared/Nav'
 
 const CATEGORIES = ['adventure', 'travel', 'food', 'skill', 'life']
 const STATUS_ICONS = {
@@ -14,8 +14,7 @@ const STATUS_ICONS = {
 }
 
 export default function Dashboard() {
-  const { profile, user, signOut } = useAuth()
-  const navigate = useNavigate()
+  const { profile, user } = useAuth()
 
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
@@ -108,41 +107,11 @@ export default function Dashboard() {
     setPlanLoading(null)
   }
 
-  async function handleSignOut() {
-    await signOut()
-    navigate('/')
-  }
-
-  const displayName = profile?.full_name || user?.email
   const done = items.filter(i => i.status === 'done').length
 
   return (
     <div className="min-h-[100dvh] bg-[#f2f2f2]">
-      {/* Nav */}
-      <nav className="bg-white border-b border-[#f2f2f2] sticky top-0 z-[100]">
-        <div className="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between">
-          <Logo />
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/profile')}
-              className="flex items-center gap-2 text-sm font-medium text-[#222222] hover:text-[#ff385c] transition-colors"
-            >
-              {profile?.avatar_url ? (
-                <img src={profile.avatar_url} alt="" className="w-7 h-7 rounded-full object-cover" />
-              ) : (
-                <div className="w-7 h-7 rounded-full bg-[#f2f2f2] flex items-center justify-center">
-                  <User size={14} className="text-[#6a6a6a]" />
-                </div>
-              )}
-              {displayName}
-            </button>
-            <button onClick={handleSignOut} className="btn-ghost py-2 px-3 flex items-center gap-1.5 text-sm">
-              <LogOut size={14} />
-              Sign out
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Nav />
 
       {/* Content */}
       <main className="max-w-[800px] mx-auto px-6 py-12">
