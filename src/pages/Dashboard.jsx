@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Plus, X, Sparkles, CheckCircle, Circle, Clock, ChevronDown, ChevronUp } from 'lucide-react'
+import { Plus, X, Sparkles, CheckCircle, Circle, Clock, ChevronDown, ChevronUp, Lightbulb, Check } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
-import { generatePlan } from '../lib/claude'
+import { generatePlan, generateSuggestions } from '../lib/claude'
 import Nav from '../components/shared/Nav'
 
 const CATEGORIES = ['adventure', 'travel', 'food', 'skill', 'life']
@@ -21,6 +20,10 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false)
   const [expandedItem, setExpandedItem] = useState(null)
   const [planLoading, setPlanLoading] = useState(null)
+  const [planThinking, setPlanThinking] = useState(null)
+  const [suggestions, setSuggestions] = useState([])
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false)
+  const [showSuggestions, setShowSuggestions] = useState(false)
 
   // New item form state
   const [title, setTitle] = useState('')
@@ -87,11 +90,8 @@ export default function Dashboard() {
   }
 
   async function getAIPlan(item) {
-    if (!import.meta.env.VITE_CLAUDE_API_KEY) {
-      alert('Add your VITE_CLAUDE_API_KEY to .env to use AI planning.')
-      return
-    }
     setPlanLoading(item.id)
+    setPlanThinking(item.id)
     try {
       const plan = await generatePlan(item, profile)
       const { error } = await supabase.from('ai_plans').upsert({
@@ -99,12 +99,42 @@ export default function Dashboard() {
         user_id: user.id,
         plan,
       })
-      if (!error) fetchItems()
+      if (!error) {
+        fetchItems()
+        setExpandedItem(item.id)
+      }
     } catch (err) {
-      // Try to get more detail from the response
       alert('AI plan failed: ' + (err.message || JSON.stringify(err)))
     }
     setPlanLoading(null)
+    setPlanThinking(null)
+  }
+
+  async function getAISuggestions() {
+    setSuggestionsLoading(true)
+    setShowSuggestions(true)
+    try {
+      const existing = items.map(i => i.title)
+      const completed = items.filter(i => i.status === 'done').map(i => i.title)
+      const result = await generateSuggestions(profile, existing, completed)
+      setSuggestions(result.suggestions || [])
+    } catch (err) {
+      alert('Suggestions failed: ' + err.message)
+    }
+    setSuggestionsLoading(false)
+  }
+
+  async function acceptSuggestion(s) {
+    const { error } = await supabase.from('bucket_items').insert({
+      user_id: user.id,
+      title: s.title,
+      category: s.category,
+      status: 'not_started',
+    })
+    if (!error) {
+      fetchItems()
+      setSuggestions(prev => prev.filter(x => x.title !== s.title))
+    }
   }
 
   const done = items.filter(i => i.status === 'done').length
@@ -126,11 +156,62 @@ export default function Dashboard() {
                 {items.length === 0 ? 'Nothing yet — add your first item.' : `${done} of ${items.length} completed`}
               </p>
             </div>
-            <button onClick={() => setShowModal(true)} className="btn-primary flex items-center gap-2">
-              <Plus size={16} />
-              Add item
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={getAISuggestions}
+                disabled={suggestionsLoading}
+                className="btn-ghost flex items-center gap-2 text-sm"
+              >
+                {suggestionsLoading
+                  ? <span className="w-3.5 h-3.5 border border-[#222222] border-t-transparent rounded-full animate-spin" />
+                  : <Lightbulb size={15} />}
+                {suggestionsLoading ? 'Thinking...' : 'AI Suggest'}
+              </button>
+              <button onClick={() => setShowModal(true)} className="btn-primary flex items-center gap-2">
+                <Plus size={16} />
+                Add item
+              </button>
+            </div>
           </div>
+
+          {/* AI Suggestions panel */}
+          {showSuggestions && (
+            <div className="card p-5 mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <Sparkles size={16} className="text-[#ff385c]" />
+                  <span className="font-semibold text-[#222222]">AI Suggestions for you</span>
+                </div>
+                <button onClick={() => setShowSuggestions(false)} className="text-[#c1c1c1] hover:text-[#222222]">
+                  <X size={16} />
+                </button>
+              </div>
+              {suggestionsLoading ? (
+                <div className="space-y-2">
+                  {[1,2,3].map(i => <div key={i} className="skeleton h-12 rounded-btn" />)}
+                  <p className="text-sm text-[#6a6a6a] text-center pt-1">Thinking up ideas based on your profile...</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {suggestions.map((s, i) => (
+                    <div key={i} className="flex items-start gap-3 p-3 rounded-btn border border-[#f2f2f2] hover:border-[#c1c1c1] transition-all">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-[#222222] text-sm">{s.title}</p>
+                        <p className="text-xs text-[#6a6a6a] mt-0.5">{s.reason}</p>
+                      </div>
+                      <button
+                        onClick={() => acceptSuggestion(s)}
+                        className="shrink-0 flex items-center gap-1 text-xs font-semibold text-[#ff385c] border border-[#ff385c]/30 px-2.5 py-1.5 rounded-btn hover:bg-[#ff385c]/5 transition-all"
+                      >
+                        <Check size={11} />
+                        Add
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Items list */}
           {loading ? (
@@ -205,7 +286,7 @@ export default function Dashboard() {
                             ) : (
                               <Sparkles size={12} />
                             )}
-                            AI Plan
+                            {planThinking === item.id ? 'Thinking...' : 'AI Plan'}
                           </button>
                         )}
                         {plan && (

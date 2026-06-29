@@ -9,7 +9,7 @@ import Nav from '../components/shared/Nav'
 const DEMO_POSTS = [
   {
     id: 'demo-1',
-    user: { full_name: 'Jordan Miles', username: 'jordanmiles', avatar: 'https://picsum.photos/seed/jordan/200/200' },
+    user: { full_name: 'Broden Haessig', username: 'brodenhaessig', avatar: 'https://picsum.photos/seed/broden/200/200' },
     title: 'Skydive over the Swiss Alps',
     category: 'adventure',
     completed_at: new Date(Date.now() - 1000 * 60 * 23).toISOString(),
@@ -19,7 +19,7 @@ const DEMO_POSTS = [
   },
   {
     id: 'demo-2',
-    user: { full_name: 'Maya Chen', username: 'mayachen', avatar: 'https://picsum.photos/seed/maya/200/200' },
+    user: { full_name: 'Rober Haessig', username: 'roberhaessig', avatar: 'https://picsum.photos/seed/rober/200/200' },
     title: 'Eat at a 3 Michelin star restaurant',
     category: 'food',
     completed_at: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
@@ -29,7 +29,7 @@ const DEMO_POSTS = [
   },
   {
     id: 'demo-3',
-    user: { full_name: 'Tanner Reid', username: 'tannerreid', avatar: 'https://picsum.photos/seed/tanner/200/200' },
+    user: { full_name: 'Marrison Haessig', username: 'marrisonhaessig', avatar: 'https://picsum.photos/seed/marrison/200/200' },
     title: 'Hike the Appalachian Trail end-to-end',
     category: 'adventure',
     completed_at: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
@@ -39,7 +39,7 @@ const DEMO_POSTS = [
   },
   {
     id: 'demo-4',
-    user: { full_name: 'Priya Nair', username: 'priyanair', avatar: 'https://picsum.photos/seed/priya/200/200' },
+    user: { full_name: 'Broden Haessig', username: 'brodenhaessig', avatar: 'https://picsum.photos/seed/broden/200/200' },
     title: 'Learn to surf in Bali',
     category: 'skill',
     completed_at: new Date(Date.now() - 1000 * 60 * 60 * 11).toISOString(),
@@ -49,7 +49,7 @@ const DEMO_POSTS = [
   },
   {
     id: 'demo-5',
-    user: { full_name: 'Chris Lawson', username: 'chrislawson', avatar: 'https://picsum.photos/seed/chris/200/200' },
+    user: { full_name: 'Rober Haessig', username: 'roberhaessig', avatar: 'https://picsum.photos/seed/rober/200/200' },
     title: 'See the Northern Lights in Iceland',
     category: 'travel',
     completed_at: new Date(Date.now() - 1000 * 60 * 60 * 18).toISOString(),
@@ -59,7 +59,7 @@ const DEMO_POSTS = [
   },
   {
     id: 'demo-6',
-    user: { full_name: 'Sofia Reyes', username: 'sofiareyes', avatar: 'https://picsum.photos/seed/sofia/200/200' },
+    user: { full_name: 'Marrison Haessig', username: 'marrisonhaessig', avatar: 'https://picsum.photos/seed/marrison/200/200' },
     title: 'Write and publish a novel',
     category: 'skill',
     completed_at: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),

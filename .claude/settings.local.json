@@ -9,7 +9,9 @@
       "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; npm run build 2>&1)",
       "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; git add .; git commit -m \"add feed with demo posts and shared nav\"; git push 2>&1)",
       "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; git add .; git commit -m \"increase max_tokens to fix truncated AI response\"; git push 2>&1)",
-      "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; git add .; git commit -m \"increase function timeout to 30s, reduce token count\"; git push 2>&1)"
+      "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; git add .; git commit -m \"increase function timeout to 30s, reduce token count\"; git push 2>&1)",
+      "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; npm run build 2>&1 | tail -6)",
+      "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; git add .; git commit -m \"add thinking state, ai suggestions, update feed names\"; git push 2>&1)"
     ]
   }
 }
