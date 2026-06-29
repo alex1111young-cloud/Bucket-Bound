@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #ffffff;
+  --text: #222222;
+  --red: #ff385c;
+  --surface: #f2f2f2;
+  --secondary: #6a6a6a;
+  --border: #c1c1c1;
+  --luxe: #460479;
+  --radius-btn: 8px;
+  --radius-card: 20px;
+  --radius-circle: 50%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#ff385c] text-white font-semibold px-6 py-3 rounded-btn
+      hover:bg-[#e0314f] transition-all duration-200 active:translate-y-px
+      shadow-sm hover:shadow-md;
+  }
+
+  .btn-ghost {
+    @apply border border-[#c1c1c1] text-[#222222] font-semibold px-6 py-3 rounded-btn
+      hover:bg-[#f2f2f2] transition-all duration-200;
+  }
+
+  .input-field {
+    @apply w-full border border-[#c1c1c1] rounded-btn px-4 py-3 text-[#222222]
+      focus:outline-none focus:ring-2 focus:ring-[#ff385c] focus:ring-offset-1
+      placeholder:text-[#c1c1c1] transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-card shadow-card border border-white/0;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f2f2f2 25%, #e8e8e8 50%, #f2f2f2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 420ms ease-out forwards;
+}
+
+.fade-up-delay-1 { animation-delay: 80ms; opacity: 0; }
+.fade-up-delay-2 { animation-delay: 160ms; opacity: 0; }
+.fade-up-delay-3 { animation-delay: 240ms; opacity: 0; }
+.fade-up-delay-4 { animation-delay: 320ms; opacity: 0; }
