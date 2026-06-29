@@ -174,25 +174,25 @@ STRIPE_SECRET_KEY=
 ## Feature List & Build Status
 
 ### Phase 1 — Foundation
-- [ ] Supabase auth (email/password)
-- [ ] User onboarding flow (name, photo, age range, interests, budget)
-- [ ] Dashboard with list overview
-- [ ] Bucket list item CRUD
+- [x] Supabase auth (email/password)
+- [x] User onboarding flow (name, photo, age range, interests, budget)
+- [x] Dashboard with list overview
+- [x] Bucket list item CRUD
 - [ ] Public profile page (bucketbound.app/username)
 
 ### Phase 2 — The Hook
-- [ ] AI Planner (per item: steps, cost, gear, best time, difficulty)
+- [x] AI Planner (per item: steps, cost, gear, best time, difficulty)
 - [ ] Free tier: 3 AI plans/month gate
 - [ ] Progress journal (text + photo per item)
 - [ ] Vibe tags on journal entries
 - [ ] Story view on item completion
-- [ ] AI Suggestions (5 personalized, accept/dismiss, weekly refresh)
+- [x] AI Suggestions (5 personalized, accept/dismiss, weekly refresh)
 - [ ] Shareable completion card (auto-generated, brandable, TikTok/Instagram sized)
 
 ### Phase 3 — Social
 - [ ] Follow system
-- [ ] Experience feed (friend completions)
-- [ ] "Inspired" reaction
+- [x] Experience feed (friend completions)
+- [x] "Inspired" reaction
 - [ ] Discover tab (public completions globally)
 - [ ] Firsts badges (first at school/city to complete an item)
 - [ ] School leaderboard
@@ -301,9 +301,9 @@ Respond in JSON only:
 
 > Update this section at the start of each Claude Code session with what was last completed and what we're working on today.
 
-**Last completed:** Nothing yet — project not started.
-**Working on today:** [UPDATE THIS]
-**Blockers:** [UPDATE THIS]
+**Last completed:** Phase 1 foundation + AI planner + AI suggestions + feed with inspired reactions. Deployed to Netlify (golden-cactus-d343b0.netlify.app). Supabase schema live with full RLS.
+**Working on today:** —
+**Blockers:** Claude API calls route through a Netlify serverless function at /api/ai-plan to avoid CORS. Timeout set to 30s.
 
 ---
 
