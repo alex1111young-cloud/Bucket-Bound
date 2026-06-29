@@ -7,7 +7,8 @@
       "PowerShell(Get-ChildItem \"C:\\\\Users\\\\alexy\\\\AppData\\\\Local\" -Directory | Where-Object { $_.Name -match 'node|nvm|fnm' } | Select-Object Name)",
       "PowerShell($nodePath = \"C:\\\\Users\\\\alexy\\\\AppData\\\\Local\\\\claude-cli-nodejs\"; Get-ChildItem $nodePath | Select-Object Name; & \"$nodePath\\\\node.exe\" --version 2>&1; & \"$nodePath\\\\npm.cmd\" --version 2>&1)",
       "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; npm run build 2>&1)",
-      "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; git add .; git commit -m \"add feed with demo posts and shared nav\"; git push 2>&1)"
+      "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; git add .; git commit -m \"add feed with demo posts and shared nav\"; git push 2>&1)",
+      "PowerShell(cd \"C:\\\\Users\\\\alexy\\\\Claude\\\\Projects\\\\Bucket Bound\"; $env:PATH = \"C:\\\\Program Files\\\\nodejs;$env:PATH\"; git add .; git commit -m \"increase max_tokens to fix truncated AI response\"; git push 2>&1)"
     ]
   }
 }
